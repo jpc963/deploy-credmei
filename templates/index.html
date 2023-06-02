@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    <section>
+        <div class="card">
+            <h1>Consulta de CEP</h1>
+            <form action="{% url 'buscar_cep' %}" method="POST" id="form_cep">
+                {% csrf_token %}
+                <label for="cep">Digite o CEP:</label>
+                <input type="text" name="cep" placeholder="Somente números" class="input_cep" maxlength="8" required>
+                <span class="span_required"></span>
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="error">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <span class="span_required"></span>
+                <p>
+                    <button type="submit" id="btn_buscar">Buscar</button>
+                </p>
+                <ul id="resultado_cep">
+                    {% for r in resultado %}
+                        <li>Estado: {{ r.state }}</li>
+                        <li>Cidade: {{ r.city }}</li>
+                        <li>Bairro: {{ r.neighborhood }}</li>
+                        <li>Rua: {{ r.street }}</li>
+                        <li>Serviço: {{ r.service }}</li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+    </section>
+    <div id="btn-historico">
+        <a href="{% url 'historico' %}">
+            <button type="button" id="btn_historico">Ver histórico</button>
+        </a>
+    </div>
+
+{% endblock %}

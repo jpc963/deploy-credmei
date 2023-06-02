@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    <section>
+        <div class="card">
+            <div>
+                <form action="{% url 'historico' %}" method="GET">
+                    {% csrf_token %}
+                    <h1>Histórico de pesquisa</h1>
+                    {% for h in historico_cep %}
+                        <ul class="item_historico">
+                            <li>{{ h.cep }}</li>
+                            <li>{{ h.state }}</li>
+                            <li>{{ h.city }}</li>
+                            <li>{{ h.neighborhood }}</li>
+                            <li>{{ h.street }}</li>
+                            <li>{{ h.service }}</li>
+                        </ul>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </section>
+    <div id="btn-historico">
+        <a href="{% url 'buscar_cep' %}">
+            <button type="button" id="btn_historico">Voltar</button>
+        </a>
+    </div>
+
+{% endblock %}
